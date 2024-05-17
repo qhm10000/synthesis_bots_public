@@ -1,5 +1,5 @@
 # Main workflow code for Synthesis Bots (A.I.C. Group)
-
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.11209893.svg)](https://doi.org/10.5281/zenodo.11209893)
 ## Requirements and installation
 
 ### System requirements and dependencies
