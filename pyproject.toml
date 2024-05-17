@@ -1,0 +1,99 @@
+[build-system]
+requires = [
+    "setuptools",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "synthesis_bots"
+description = "Main control for the Synthesis Bots project (A.I.C. Group)"
+version = "0.3.0"
+requires-python = ">=3.12"
+authors = [
+    { name = "Filip T. Szczypiński", email = "fiszczyp@gmail.com" },
+    { name = "Jean-François Ayme", email = "jean-francois.ayme@liverpool.ac.uk" },
+    { name = "Tianwei Dai", email = "tdai@liverpool.ac.uk" },
+    { name = "Sriram Vijayakrishnan", email = "sriram.vijayakrishnan@liverpool.ac.uk" },
+]
+dependencies = [
+    "dtw-python",
+    "matplotlib",
+    "numpy",
+    "pandas",
+    "pyserial",
+    "scipy",
+    "zmq",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Chemistry",
+]
+
+    [project.optional-dependencies]
+    dev = [
+        "pre-commit",
+        "black",
+        "docformatter",
+        "interrogate",
+        "ipython",
+        "isort",
+        "pandas-stubs",
+        "pycodestyle",
+        "pydocstyle",
+        "pytest",
+        "pytest-cov",
+        "flake8",
+    ]
+    lcms = [
+        "lcms_parser@git+https://github.com/cooper-group-uol-robotics/lcms_parser",
+    ]
+    nmr = [
+        "fourier_nmr_driver@git+https://github.com/cooper-group-uol-robotics/fourier_nmr_driver",
+    ]
+
+    [project.scripts]
+    synthesis_bots = "synthesis_bots.utils.__main__:main"
+    connect_nmr    = "synthesis_bots.utils.connect:connect_nmr"
+    connect_lcms   = "synthesis_bots.utils.connect:connect_lcms"
+
+[tool.setuptools]
+include-package-data = true
+
+    [tool.setuptools.packages.find]
+    where = ["src"]
+
+[tool.setuptools.package-data]
+"*" = ["py.typed", "*.mplstyle"]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+
+[tool.interrogate]
+exclude = [
+    "setup.py",
+]
+verbose = 2
+ignore-init-method = true
+ignore-init-module = true
+ignore-setters = true
+ignore-property-decorators = true
+ignore-magic = true
+
+[[tool.mypy.overrides]]
+module = [
+    'scipy.signal',
+    'masslynx',
+    'serial',
+    'bruker.api.topspin',
+    'dtw',
+]
+ignore_missing_imports = true
+
+[tool.isort]
+profile         = "black"
+force_grid_wrap = 2
+line_length     = 79

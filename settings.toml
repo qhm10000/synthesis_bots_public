@@ -1,0 +1,94 @@
+[dry]
+
+dry = false
+
+[tcp]
+
+HOST      = "tcp://172.31.1.17:5558"
+NMR       = "tcp://172.31.1.15:5552"
+CHEMSPEED = "tcp://172.31.1.16:5553"
+LCMS      = "tcp://172.31.1.18:5554"
+
+[paths]
+
+LCMS_archive   = "D:/synthesis_bots"
+LCMS_queue     = "D:/Queue"
+LCMS_data      = "D:/Projects/SynthesisBotsSuprachem.PRO/Data"
+LCMS_to_NMR    = "Y:/synthesis_bots"
+NMR_data       = "C:/synthesis_bots"
+NMR_archive    = "Y:/synthesis_bots"
+CS_csv_supra   = "C:/synthesis-bot/Import_CSV.csv"
+CS_csv_medchem = "C:/synthesis-bot/Medchem.csv"
+
+[defaults.NMR]
+
+num_scans    = 64
+pp_threshold = 0.02
+field_presat = 10
+l30          = 2
+parameters   = "MULTISUPPDC_f"
+solvent      = "CH3CN"
+wait_time    = 120
+shim_time    = 1200
+reshim_time  = 14400
+shim_sample  = 1
+rack_layout  = "KUKA"
+owner        = "Filip T. Szczypinski"
+origin       = "AIC Group, University of Liverpool"
+
+[defaults.MS]
+injection_volume      = 0.5
+peak_match_tolerance  = 0.4
+analog_peak_threshold = 0.3
+tic_peak_params       = { "height" = 0.2, "distance" = 50 }
+analog_peaks_params   = { "height" = 0.1, "distance" = 50 }
+ms_peak_params        = { "height" = 0.15, "distance" = 10 }
+solvent_front         = 0.4
+lc_run_end            = 3.0
+integral_rel_height   = 0.95
+# Time (s) for sample to reach MS after LC detector
+lc_ms_flowpath = 2.84
+
+[workflows.PREFIX]
+
+Supramol_Screening   = "SUPRAMOL-SCREENING"
+Supramol_Replication = "SUPRAMOL-REPLICATION"
+Supramol_HostGuest   = "SUPRAMOL-HOST-GUEST"
+Medchem_Screening    = "MEDCHEM-SCREENING"
+Medchem_Scaleup      = "MEDCHEM-SCALEUP"
+Medchem_Diversity    = "MEDCHEM-DIVERSITY"
+Photocat             = "PHOTOCATALYSIS"
+
+[workflows.NMR]
+
+Supramol_Screening   = "synthesis_bots.workflows.nmr.supramol.screening"
+Supramol_Replication = "synthesis_bots.workflows.nmr.supramol.replication"
+Supramol_HostGuest   = "synthesis_bots.workflows.nmr.supramol.host_guest"
+Medchem_Screening    = "synthesis_bots.workflows.nmr.medchem.screening"
+Medchem_Scaleup      = "synthesis_bots.workflows.nmr.medchem.scaleup"
+Medchem_Diversity    = "synthesis_bots.workflows.nmr.medchem.diversity"
+
+[workflows.LCMS]
+InsertRack1  = "synthesis_bots.workflows.ms.insert_rack_one"
+InsertRack2  = "synthesis_bots.workflows.ms.insert_rack_two"
+ExtractRack1 = "synthesis_bots.workflows.ms.eject_rack_one"
+ExtractRack2 = "synthesis_bots.workflows.ms.eject_rack_two"
+Supra1       = "synthesis_bots.workflows.ms.supramol.screening"
+Supra2       = "synthesis_bots.workflows.ms.supramol.replication"
+Medchem1     = "synthesis_bots.workflows.ms.medchem.screening"
+Medchem2     = "synthesis_bots.workflows.ms.medchem.scaleup"
+Medchem3     = "synthesis_bots.workflows.ms.medchem.diversity"
+Photochem    = "synthesis_bots.workflows.ms.photocat.photocat"
+
+[workflows.decision]
+
+peak_number = 3 # How many peaks different from SM allowed.
+shifted_proportion = 0.5 # What proportion of peaks needs to have shifted.
+metals_mz = [
+    3,
+    2,
+] # [x, y] if x metals, required at least y m/z peaks.
+dtw_threshold = 20.0 # Distance threshold for dynamic time warp.
+ppm_range = [11, 6] # PPM range of interest
+hg_shift = 0.02 # PPM shift to trigget host-guest identification
+hg_lb = 1.8 # Hz exponential multiplication line broadening
