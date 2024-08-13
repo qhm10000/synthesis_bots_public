@@ -47,7 +47,7 @@ classifiers = [
         "flake8",
     ]
     lcms = [
-        "lcms_parser@git+https://github.com/cooper-group-uol-robotics/lcms_parser",
+        "lcms_parser@git+https://github.com/cooper-group-uol-robotics/lcms_parser#egg=29bf657ff0c658951dc29ddc3f1715d11a041174",
     ]
     nmr = [
         "fourier_nmr_driver@git+https://github.com/cooper-group-uol-robotics/fourier_nmr_driver",
