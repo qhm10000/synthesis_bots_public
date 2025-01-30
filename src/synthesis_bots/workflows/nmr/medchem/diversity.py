@@ -157,5 +157,13 @@ def main(
             archive_path=archive_path,
             nmr_summary_path=nmr_summary_path,
         )
+        """
+        Generate all necessary files for the replication workflow.
 
+        Args:
+        - csv_path (str): Path to save the generated chemspeed CSV file.
+        - ms_path (str): Path to save the generated MS peaks JSON file.
+        - nmr_path (str): Path to save the generated NMR experiments JSON file.
+
+        """
         pub.send_string("[NMR] Medchem_Diversity Completed\n")
